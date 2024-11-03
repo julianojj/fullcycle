@@ -1,0 +1,5 @@
+# Desafio Docker Full Cycle
+Criar uma aplicação nodejs e utilizar o nginx como proxy reverso
+
+## Como rodar?
+Deve-se rodar o seguinte comando `docker compose up -d` para executar a aplicação
