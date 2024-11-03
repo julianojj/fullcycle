@@ -1,0 +1,8 @@
+# Desafio Docker Full Cycle
+
+Criar imagem docker que retorna uma mensagem `Full Cycle Rockets!` utilizando a linguagem Go.
+
+[DockerHub](https://hub.docker.com/r/julianojj/fullcycle)
+
+## Como rodar?
+Deve-se rodar o seguinte comando `docker container run --rm --name desafio1 julianojj/fullcycle`
