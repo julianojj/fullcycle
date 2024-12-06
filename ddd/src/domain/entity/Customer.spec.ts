@@ -4,7 +4,7 @@ import { Address, Customer } from './Customer'
 
 describe('Customer test', () => {
     it('Should create a customer', () => {
-        const customer = new Customer(randomUUID(), new Address("123 Main St", "Anytown", "CA", "12345"))
+        const customer = new Customer(randomUUID(), 'John Doe', new Address("123 Main St", "Anytown", "CA", "12345"))
         expect(customer.id).toBeDefined()
         expect(customer.address.street).toBe("123 Main St")
         expect(customer.address.city).toBe("Anytown")
@@ -14,7 +14,7 @@ describe('Customer test', () => {
     })
 
     it('Should update customer address', () => {
-        const customer = new Customer(randomUUID(), new Address("123 Main St", "Anytown", "CA", "12345"))
+        const customer = new Customer(randomUUID(), 'John Doe', new Address("123 Main St", "Anytown", "CA", "12345"))
         customer.updateAddress(new Address("456 Elm St", "New York", "NY", "54321"))
         expect(customer.address.street).toBe("456 Elm St")
         expect(customer.address.city).toBe("New York")
@@ -28,22 +28,22 @@ describe('Customer test', () => {
     })
 
     it('Should add and subtract reward points', () => {
-        const customer = new Customer(randomUUID(), new Address("123 Main St", "Anytown", "CA", "12345"))
+        const customer = new Customer(randomUUID(), 'John Doe', new Address("123 Main St", "Anytown", "CA", "12345"))
         customer.addRewardPoints(100)
         expect(customer.rewardPoints).toBe(100)
     })
 
     it('Should throw exception when reward points are negative', () => {
-        const customer = new Customer(randomUUID(), new Address("123 Main St", "Anytown", "CA", "12345"))
+        const customer = new Customer(randomUUID(), 'John Doe', new Address("123 Main St", "Anytown", "CA", "12345"))
         expect(() => customer.addRewardPoints(-100)).toThrowError('reward points cannot be negative')
     })
 
     it('Should throw exception when id is empty', () => {
-        expect(() => new Customer("", new Address("123 Main St", "Anytown", "CA", "12345"))).toThrowError('customer id is required')
+        expect(() => new Customer('', 'Jhon Doe', new Address("123 Main St", "Anytown", "CA", "12345"))).toThrowError('customer id is required')
     })
 
     it('Should throw exception when address is empty', () => {
-        expect(() => new Customer(randomUUID(), null)).toThrowError('address is required')
+        expect(() => new Customer(randomUUID(), 'John Doe', null)).toThrowError('address is required')
     })
 
     it('Should throw exception when street is empty', () => {

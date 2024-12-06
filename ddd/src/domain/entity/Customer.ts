@@ -4,6 +4,7 @@ export class Customer {
 
     constructor(
         readonly id: string,
+        readonly name: string,
         address: Address,
 
     ) {
@@ -14,6 +15,7 @@ export class Customer {
 
     private validate(): void {
         if (!this.id) throw new Error('customer id is required')
+        if (!this.name) throw new Error('customer name is required')
         if (!this._address) throw new Error('address is required')
     }
 
@@ -50,5 +52,9 @@ export class Address {
         if (!this.city) throw new Error('city is required')
         if (!this.state) throw new Error('state is required')
         if (!this.zipCode) throw new Error('zip code is required')
+    }
+
+    get toUS(): string {
+        return `${this.street}, ${this.city}, ${this.state} ${this.zipCode}`
     }
 }
