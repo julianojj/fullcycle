@@ -1,4 +1,5 @@
-import { Customer } from '../entity/Customer'
+
+import { Customer } from '../../../customer/entity/Customer'
 import { Order } from '../entity/Order'
 
 export class OrderService {

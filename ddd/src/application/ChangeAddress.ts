@@ -1,6 +1,6 @@
-import { Address } from "../domain/entity/Customer";
-import { CustomerAddressChangedEvent } from "../domain/event/Event";
-import { CustomerRepositoryInterface } from "../domain/repository/CustomerRepositoryInterface";
+import { CustomerAddressChangedEvent } from "../domain/@shared/event/Event";
+import { Address } from "../domain/customer/entity/Customer";
+import { CustomerRepositoryInterface } from "../domain/customer/repository/CustomerRepositoryInterface";
 import { EventObserver } from "../infra/event/EventObserver";
 
 export default class ChangeAddress {

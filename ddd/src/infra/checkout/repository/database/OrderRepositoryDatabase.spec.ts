@@ -1,11 +1,11 @@
 import { randomUUID } from 'crypto'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { Item } from '../../../domain/entity/Item'
-import { Order } from '../../../domain/entity/Order'
-import CustomerModel from '../../database/sequelize/model/CustomerModel'
-import OrderItemModel from '../../database/sequelize/model/OrderItemModel'
-import OrderModel from '../../database/sequelize/model/OrderModel'
-import { OrderRepositoryDatabase } from './OrderRepositoryDatabase'
+import { Item } from '../../../../domain/checkout/order/entity/Item'
+import { Order } from '../../../../domain/checkout/order/entity/Order'
+import CustomerModel from '../../../database/sequelize/model/CustomerModel'
+import OrderItemModel from '../../../database/sequelize/model/OrderItemModel'
+import OrderModel from '../../../database/sequelize/model/OrderModel'
+import { OrderRepositoryDatabase } from '../../repository/database/OrderRepositoryDatabase'
 
 describe('Order Repository Database Test', () => {
 

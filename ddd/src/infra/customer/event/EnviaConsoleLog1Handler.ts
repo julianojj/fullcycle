@@ -1,4 +1,4 @@
-import EventHandler from '../../domain/event/EventHandler'
+import EventHandler from '../../../domain/@shared/event/EventHandler'
 
 export default class EnviaConsoleLog1Handler implements EventHandler {
 

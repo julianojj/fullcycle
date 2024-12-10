@@ -1,6 +1,6 @@
-import Event from '../../domain/event/Event'
-import EventHandler from '../../domain/event/EventHandler'
-import Observer from '../../domain/event/Observer'
+import Event from "../../domain/@shared/event/Event"
+import EventHandler from "../../domain/@shared/event/EventHandler"
+import Observer from "../../domain/@shared/event/Observer"
 
 export class EventObserver implements Observer {
     private _handlers: EventHandler[]

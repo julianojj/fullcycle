@@ -1,11 +1,11 @@
 import { randomUUID } from 'crypto'
 import { describe, expect, it } from 'vitest'
-import { EventObserver } from '../../infra/event/EventObserver'
-import { SendEmailWhenOrderPlaced } from '../../infra/event/SendEmailWhenOrderPlaced'
-import { Address, Customer } from '../entity/Customer'
+import { SendEmailWhenOrderPlaced } from '../../../../infra/checkout/event/SendEmailWhenOrderPlaced'
+import { Address, Customer } from '../../../customer/entity/Customer'
 import { Item } from '../entity/Item'
 import { Order } from '../entity/Order'
 import { OrderService } from './OrderService'
+import { EventObserver } from '../../../../infra/event/EventObserver'
 
 describe('OrderService test', () => {
     it('Should place an order', () => {

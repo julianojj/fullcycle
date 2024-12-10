@@ -1,8 +1,8 @@
-import { beforeEach, describe, expect, it } from 'vitest'
-import { Address, Customer } from '../../../domain/entity/Customer'
-import CustomerModel from '../../database/sequelize/model/CustomerModel'
-import { CustomerRepositoryDatabase } from './CustomerRepositoryDatabase'
 import { randomUUID } from 'crypto'
+import { beforeEach, describe, expect, it } from 'vitest'
+import { Address, Customer } from '../../../../domain/customer/entity/Customer'
+import CustomerModel from '../../../database/sequelize/model/CustomerModel'
+import { CustomerRepositoryDatabase } from './CustomerRepositoryDatabase'
 
 describe('Order Repository Database Test', () => {
 

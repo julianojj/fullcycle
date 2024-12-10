@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { OrderPlacedEvent } from '../../domain/event/Event'
+import { OrderPlacedEvent } from '../../domain/@shared/event/Event'
+import { SendEmailWhenOrderPlaced } from '../checkout/event/SendEmailWhenOrderPlaced'
 import { EventObserver } from './EventObserver'
-import { SendEmailWhenOrderPlaced } from './SendEmailWhenOrderPlaced'
 
 describe('EventObserver test', () => {
 

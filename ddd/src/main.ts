@@ -1,6 +1,6 @@
-import { OrderPlacedEvent } from "./domain/event/Event"
+import { OrderPlacedEvent } from "./domain/@shared/event/Event"
+import { SendEmailWhenOrderPlaced } from "./infra/checkout/event/SendEmailWhenOrderPlaced"
 import { EventObserver } from "./infra/event/EventObserver"
-import { SendEmailWhenOrderPlaced } from "./infra/event/SendEmailWhenOrderPlaced"
 
 const observer = new EventObserver()
 const hander = new SendEmailWhenOrderPlaced()

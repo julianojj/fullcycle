@@ -1,10 +1,10 @@
 import { beforeEach, describe, expect, it } from 'vitest'
+import EnviaConsoleLog1Handler from '../infra/customer/event/EnviaConsoleLog1Handler'
+import EnviaConsoleLog2Handler from '../infra/customer/event/EnviaConsoleLog2Handler'
+import { CustomerRepositoryDatabase } from '../infra/customer/repository/database/CustomerRepositoryDatabase'
 import CustomerModel from '../infra/database/sequelize/model/CustomerModel'
-import { CustomerRepositoryDatabase } from '../infra/repository/database/CustomerRepositoryDatabase'
-import CreateCustomer from './CreateCustomer'
 import { EventObserver } from '../infra/event/EventObserver'
-import EnviaConsoleLog1Handler from '../infra/event/EnviaConsoleLog1Handler'
-import EnviaConsoleLog2Handler from '../infra/event/EnviaConsoleLog2Handler'
+import CreateCustomer from './CreateCustomer'
 
 describe('CreateCustomer test', () => {
 

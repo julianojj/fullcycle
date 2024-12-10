@@ -1,5 +1,5 @@
-import Event from "../../domain/event/Event";
-import EventHandler from "../../domain/event/EventHandler";
+import Event from "../../../domain/@shared/event/Event";
+import EventHandler from "../../../domain/@shared/event/EventHandler";
 
 export default class EnviaConsoleLogHandler implements EventHandler {
     eventName = 'CustomerAddressChanged'

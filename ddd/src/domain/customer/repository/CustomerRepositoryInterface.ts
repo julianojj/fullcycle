@@ -1,4 +1,4 @@
+import { Repository } from '../../@shared/repository/Repository'
 import { Customer } from '../entity/Customer'
-import { Repository } from './Repository'
 
 export interface CustomerRepositoryInterface extends Repository<Customer> { }

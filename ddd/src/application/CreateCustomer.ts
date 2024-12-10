@@ -1,9 +1,6 @@
-import { randomUUID } from "crypto"
-import { Address, Customer } from "../domain/entity/Customer"
-import { CustomerCreatedEvent } from "../domain/event/Event"
-import { CustomerRepositoryInterface } from "../domain/repository/CustomerRepositoryInterface"
-import EnviaConsoleLog1Handler from "../infra/event/EnviaConsoleLog1Handler"
-import EnviaConsoleLog2Handler from "../infra/event/EnviaConsoleLog2Handler"
+import { CustomerCreatedEvent } from "../domain/@shared/event/Event"
+import CustomerFactory from "../domain/customer/factory/CustomerFactory"
+import { CustomerRepositoryInterface } from "../domain/customer/repository/CustomerRepositoryInterface"
 import { EventObserver } from "../infra/event/EventObserver"
 
 export default class CreateCustomer {
@@ -19,11 +16,13 @@ export default class CreateCustomer {
         this._observer = observer
     }
 
-    async execute(input: CreateCustomerInput): Promise<CreateCustomerOutput> {
-        const customer = new Customer(
-            randomUUID(),
+    async execute(input: CreateCustomerInput): Promise<CreateCustomerOutput> { 
+        const customer = CustomerFactory.create(
             input.name,
-            new Address(input.street, input.city, input.state, input.zipCode)
+            input.street,
+            input.city,
+            input.state,
+            input.zipCode
         )
         await this._customerRepository.create(customer)
         const event = new CustomerCreatedEvent({
