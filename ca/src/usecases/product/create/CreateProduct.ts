@@ -1,6 +1,7 @@
 import { randomUUID } from 'crypto'
 import { Product } from '../../../domain/product/entity/Product'
 import { ProductRepositoryInterface } from '../../../domain/product/repository/ProductRepositoryInterface'
+import { CreateProductInput, CreateProductOutput } from './CreateProduct.dto'
 
 export class CreateProduct {
     constructor(
@@ -18,13 +19,4 @@ export class CreateProduct {
             productId: product.id
         }
     }
-}
-
-export type CreateProductInput = {
-    name: string
-    price: number
-}
-
-export type CreateProductOutput = {
-    productId: string
 }

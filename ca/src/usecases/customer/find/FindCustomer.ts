@@ -1,5 +1,6 @@
 import { CustomerRepositoryInterface } from '../../../domain/customer/repository/CustomerRepositoryInterface'
 import { ExceptionMessages } from '../../../exception/ValidationException'
+import { FindCustomerOutput } from './FindCustomer.dto'
 
 export class FindCustomer {
     constructor(
@@ -19,14 +20,4 @@ export class FindCustomer {
             rewardPoints: customer.rewardPoints,
         }
     }
-}
-
-export type FindCustomerOutput = {
-    id: string
-    name: string
-    street: string
-    city: string
-    state: string
-    zipCode: string
-    rewardPoints: number
 }

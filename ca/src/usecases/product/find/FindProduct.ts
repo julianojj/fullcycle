@@ -1,5 +1,6 @@
 import { ProductRepositoryInterface } from '../../../domain/product/repository/ProductRepositoryInterface'
 import { ExceptionMessages } from '../../../exception/ValidationException'
+import { FindProductOutput } from './FindProduct.dto'
 
 export class FindProduct {
     constructor(
@@ -15,10 +16,4 @@ export class FindProduct {
             price: product.price
         }
     }
-}
-
-export type FindProductOutput = {
-    id: string,
-    name: string,
-    price: number
 }

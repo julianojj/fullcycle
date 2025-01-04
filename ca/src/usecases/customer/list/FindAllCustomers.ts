@@ -1,4 +1,5 @@
 import { CustomerRepositoryInterface } from '../../../domain/customer/repository/CustomerRepositoryInterface'
+import { FindAllCustomersOutput } from './FindAllCustomers.dto'
 
 export class FindAllCustomers {
     constructor(
@@ -21,14 +22,4 @@ export class FindAllCustomers {
         }
         return output
     }
-}
-
-export type FindAllCustomersOutput = {
-    id: string,
-    name: string,
-    street: string,
-    city: string,
-    state: string,
-    zipCode: string,
-    rewardPoints: number,
 }

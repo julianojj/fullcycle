@@ -1,4 +1,5 @@
 import { ProductRepositoryInterface } from '../../../domain/product/repository/ProductRepositoryInterface'
+import { FindAllProductsOutput } from './FindAllProducts.dto'
 
 
 export class FindAllProducts {
@@ -18,10 +19,4 @@ export class FindAllProducts {
         }
         return output
     }
-}
-
-export type FindAllProductsOutput = {
-    id: string,
-    name: string,
-    price: number
 }

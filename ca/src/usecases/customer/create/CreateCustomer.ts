@@ -1,5 +1,6 @@
 import CustomerFactory from '../../../domain/customer/factory/CustomerFactory'
 import { CustomerRepositoryInterface } from '../../../domain/customer/repository/CustomerRepositoryInterface'
+import { CreateCustomerInput, CreateCustomerOutput } from './CreateCustomer.dto'
 
 export default class CreateCustomer {
     constructor(
@@ -19,14 +20,3 @@ export default class CreateCustomer {
     }
 }
 
-export type CreateCustomerInput = {
-    name: string
-    street: string
-    city: string
-    state: string
-    zipCode: string
-}
-
-export type CreateCustomerOutput = {
-    customerId: string
-}

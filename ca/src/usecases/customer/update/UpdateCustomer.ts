@@ -1,5 +1,6 @@
 import { Address } from '../../../domain/customer/entity/Customer'
 import { CustomerRepositoryInterface } from '../../../domain/customer/repository/CustomerRepositoryInterface'
+import { UpdateCustomerInput } from './UpdateCustomer.dto'
 
 export class UpdateCustomer {
     constructor(
@@ -14,14 +15,4 @@ export class UpdateCustomer {
         existingCustomer.addRewardPoints(input.rewardPoints)
         await this.customerRepository.update(existingCustomer)
     }
-}
-
-export type UpdateCustomerInput = {
-    id: string,
-    name: string,
-    street: string,
-    city: string,
-    state: string,
-    zipCode: string,
-    rewardPoints: number
 }

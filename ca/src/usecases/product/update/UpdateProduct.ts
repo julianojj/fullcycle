@@ -1,4 +1,5 @@
 import { ProductRepositoryInterface } from '../../../domain/product/repository/ProductRepositoryInterface'
+import { UpdateProductInput } from './UpdateProduct.dto'
 
 export class UpdateProduct {
     constructor(
@@ -12,10 +13,4 @@ export class UpdateProduct {
         existingProduct.updatePrice(input.price)
         await this.productRepository.update(existingProduct)
     }
-}
-
-export type UpdateProductInput = {
-    productId: string,
-    name: string,
-    price: number
 }
