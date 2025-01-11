@@ -24,14 +24,14 @@ describe('Product test', () => {
     })
 
     it('Should throw exception when id is empty', () => {
-        expect(() => new Product('', 'Product 1', 10)).toThrowError('id is required')
+        expect(() => new Product('', 'Product 1', 10)).toThrowError('Product id is required')
     })
 
     it('Should throw exception when name is empty', () => {
-        expect(() => new Product(randomUUID(), '', 10)).toThrowError('name is required')
+        expect(() => new Product(randomUUID(), '', 10)).toThrowError('Product name is required')
     })
 
     it('Should throw exception when invalid price', () => {
-        expect(() => new Product(randomUUID(), 'Product 1', -10)).toThrowError('invalid price')
+        expect(() => new Product(randomUUID(), 'Product 1', -10)).toThrowError('Invalid price')
     })
 })

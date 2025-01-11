@@ -1,3 +1,5 @@
+import { ExceptionMessages } from '../../../exception/ValidationException'
+
 export class Product {
     private _name: string
     private _price: number
@@ -21,9 +23,9 @@ export class Product {
     }
 
     private validate(): void {
-        if (!this.id) throw new Error('product id is required')
-        if (this._price <= 0) throw new Error('invalid price')
-        if (!this._name) throw new Error('product name is required')
+        if (!this.id) throw ExceptionMessages.ErrRequiredProductId
+        if (!this._name) throw ExceptionMessages.ErrRequiredProductName
+        if (this._price <= 0) throw ExceptionMessages.ErrInvalidPrice
     }
 
     updateName(name: string) {

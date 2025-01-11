@@ -5,7 +5,7 @@ export class ValidationException extends Error {
     }
 }
 
-export class NotFoundExceptions extends Error {
+export class NotFoundException extends Error {
     constructor(message: string) {
         super(message)
     }
@@ -20,6 +20,9 @@ export class ExceptionMessages {
     static readonly ErrRequiredState = new ValidationException('State address is required')
     static readonly ErrRequiredZipCode = new ValidationException('Zip code address is required')
     static readonly ErrNegativeRewardPoints = new ValidationException('Invalid reward points. Negative points are not allowed')
-    static readonly ErrCustomerNotFound = new NotFoundExceptions('Customer not found')
-    static readonly ErrProductNotFound = new NotFoundExceptions('Product not found')
+    static readonly ErrCustomerNotFound = new NotFoundException('Customer not found')
+    static readonly ErrProductNotFound = new NotFoundException('Product not found')
+    static readonly ErrRequiredProductId = new ValidationException('Product id is required')
+    static readonly ErrRequiredProductName = new ValidationException('Product name is required')
+    static readonly ErrInvalidPrice = new ValidationException('Invalid price')
 }
