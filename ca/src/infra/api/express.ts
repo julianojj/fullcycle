@@ -1,4 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express'
+import { NotificationError } from '../../domain/notification/notification.error'
 import { NotFoundException, ValidationException } from '../../exception/ValidationException'
 import CreateCustomer from '../../usecases/customer/create/CreateCustomer'
 import { FindCustomer } from '../../usecases/customer/find/FindCustomer'
@@ -55,7 +56,7 @@ new ProductRoute(
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     let message = 'Internal Server Error'
     let status = 500
-    if (err instanceof ValidationException) {
+    if (err instanceof ValidationException || err instanceof NotificationError) {
         message = err.message
         status = 422
     }

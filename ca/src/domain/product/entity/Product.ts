@@ -1,17 +1,23 @@
 import { ExceptionMessages } from '../../../exception/ValidationException'
+import { Entity } from '../../entity/entity'
+import { NotificationError } from '../../notification/notification.error'
 
-export class Product {
+const context = 'product'
+
+export class Product extends Entity {
     private _name: string
     private _price: number
 
     constructor(
-        readonly id: string,
+        id: string,
         name: string,
         price: number
     ) {
+        super(id)
         this._name = name
         this._price = price
         this.validate()
+        if (this.notification.hasError()) throw new NotificationError(this.notification.errors())
     }
 
     get name(): string {
@@ -23,9 +29,24 @@ export class Product {
     }
 
     private validate(): void {
-        if (!this.id) throw ExceptionMessages.ErrRequiredProductId
-        if (!this._name) throw ExceptionMessages.ErrRequiredProductName
-        if (this._price <= 0) throw ExceptionMessages.ErrInvalidPrice
+        if (!this._id) {
+            this.notification.addError({
+                message: ExceptionMessages.ErrRequiredProductId.message,
+                context,
+            })
+        }
+        if (!this._name) {
+            this.notification.addError({
+                message: ExceptionMessages.ErrRequiredProductName.message,
+                context,
+            })
+        }
+        if (this._price <= 0) {
+            this.notification.addError({
+                message: ExceptionMessages.ErrInvalidPrice.message,
+                context,
+            })
+        }
     }
 
     updateName(name: string) {

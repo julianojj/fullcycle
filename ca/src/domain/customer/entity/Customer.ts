@@ -1,26 +1,47 @@
 import { ExceptionMessages } from '../../../exception/ValidationException'
+import { Entity } from '../../entity/entity'
+import { NotificationError } from '../../notification/notification.error'
 
-export class Customer {
+const context = 'customer'
+
+export class Customer  extends Entity {
     private _name: string
     private _address: Address
     private _rewardPoints: number
 
     constructor(
-        readonly id: string,
+        id: string,
         name: string,
         address: Address,
         rewardPoints: number = 0
     ) {
+        super(id)
         this._name = name
         this._address = address
         this._rewardPoints = rewardPoints
         this.validate()
+        if (this.notification.hasError()) throw new NotificationError(this.notification.errors())
     }
 
     private validate(): void {
-        if (!this.id) throw ExceptionMessages.ErrRequiredCustomerId
-        if (!this.name) throw ExceptionMessages.ErrRequiredCustomerName
-        if (!this._address) throw ExceptionMessages.ErrRequiredAddress
+        if (!this.id) {
+            this.notification.addError({
+                message: ExceptionMessages.ErrRequiredCustomerId.message,
+                context
+            })
+        }
+        if (!this.name) {
+            this.notification.addError({
+                message: ExceptionMessages.ErrRequiredCustomerName.message,
+                context
+            })
+        }
+        if (!this._address) {
+            this.notification.addError({
+                message: ExceptionMessages.ErrRequiredAddress.message,
+                context
+            })
+        }
     }
 
     get name(): string {

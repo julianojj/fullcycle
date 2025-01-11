@@ -52,15 +52,15 @@ describe('Customer test', () => {
     })
 
     it('Should throw exception when id is empty', () => {
-        expect(() => new Customer('', 'Jhon Doe', new Address('123 Main St', 'Anytown', 'CA', '12345'))).toThrowError(ExceptionMessages.ErrRequiredCustomerId)
+        expect(() => new Customer('', 'Jhon Doe', new Address('123 Main St', 'Anytown', 'CA', '12345'))).toThrowError('customer: Id is required,')
     })
 
     it('Should throw exception when name is empty', () => {
-        expect(() => new Customer(randomUUID(), '', new Address('123 Main St', 'Anytown', 'CA', '12345'))).toThrowError(ExceptionMessages.ErrRequiredCustomerName)
+        expect(() => new Customer(randomUUID(), '', new Address('123 Main St', 'Anytown', 'CA', '12345'))).toThrowError('customer: Name is required,')
     })
 
     it('Should throw exception when address is empty', () => {
-        expect(() => new Customer(randomUUID(), 'John Doe', null)).toThrowError(ExceptionMessages.ErrRequiredAddress)
+        expect(() => new Customer(randomUUID(), 'John Doe', null)).toThrowError('customer: Address is required,')
     })
 
     it('Should throw exception when street is empty', () => {
@@ -77,5 +77,11 @@ describe('Customer test', () => {
 
     it('Should throw exception when zipCode is empty', () => {
         expect(() => new Address('123 Main St', 'Anytown', 'CA', '')).toThrowError(ExceptionMessages.ErrRequiredZipCode)
+    })
+
+    it('Should throw exception with 2 errors', () => {
+        expect(() => new Customer('', '', new Address('123 Main St', 'Anytown', 'CA', '12345'))).toThrowError(
+            'customer: Id is required,customer: Name is required,'
+        )
     })
 })
