@@ -1,8 +1,7 @@
-import { ExceptionMessages } from '../../../exception/ValidationException'
 import { Entity } from '../../entity/entity'
 import { NotificationError } from '../../notification/notification.error'
+import { ProductValidatorFactory } from '../factory/ProductValidatorFactory'
 
-const context = 'product'
 
 export class Product extends Entity {
     private _name: string
@@ -29,24 +28,7 @@ export class Product extends Entity {
     }
 
     private validate(): void {
-        if (!this._id) {
-            this.notification.addError({
-                message: ExceptionMessages.ErrRequiredProductId.message,
-                context,
-            })
-        }
-        if (!this._name) {
-            this.notification.addError({
-                message: ExceptionMessages.ErrRequiredProductName.message,
-                context,
-            })
-        }
-        if (this._price <= 0) {
-            this.notification.addError({
-                message: ExceptionMessages.ErrInvalidPrice.message,
-                context,
-            })
-        }
+        ProductValidatorFactory.create().validate(this)
     }
 
     updateName(name: string) {

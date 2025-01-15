@@ -1,8 +1,7 @@
 import { ExceptionMessages } from '../../../exception/ValidationException'
 import { Entity } from '../../entity/entity'
 import { NotificationError } from '../../notification/notification.error'
-
-const context = 'customer'
+import { CustomerValidatorFactory } from '../factory/CustomerValidatorFactory'
 
 export class Customer  extends Entity {
     private _name: string
@@ -24,24 +23,7 @@ export class Customer  extends Entity {
     }
 
     private validate(): void {
-        if (!this.id) {
-            this.notification.addError({
-                message: ExceptionMessages.ErrRequiredCustomerId.message,
-                context
-            })
-        }
-        if (!this.name) {
-            this.notification.addError({
-                message: ExceptionMessages.ErrRequiredCustomerName.message,
-                context
-            })
-        }
-        if (!this._address) {
-            this.notification.addError({
-                message: ExceptionMessages.ErrRequiredAddress.message,
-                context
-            })
-        }
+        CustomerValidatorFactory.create().validate(this)
     }
 
     get name(): string {
