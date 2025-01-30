@@ -1,12 +1,13 @@
 import { AggregateRoot } from '../../@shared/domain/entity/aggregate-root.interface'
 import { BaseEntity } from '../../@shared/domain/entity/base.entity'
 import { Id } from '../../@shared/domain/value-object/id.value-object'
+import { Address } from './address'
 
 export type ClientProps = {
     id?: Id
     name: string
     email: string
-    address: string
+    address: Address
     createdAt?: Date
     updatedAt?: Date
 }
@@ -14,7 +15,7 @@ export type ClientProps = {
 export class Client extends BaseEntity implements AggregateRoot {
     private _name: string
     private _email: string
-    private _address: string
+    private _address: Address
 
     constructor(props: ClientProps) {
         super(
@@ -35,7 +36,7 @@ export class Client extends BaseEntity implements AggregateRoot {
         return this._email
     }
 
-    get address(): string {
+    get address(): Address {
         return this._address
     }
 }

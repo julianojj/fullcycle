@@ -22,15 +22,20 @@ describe('Client repository test', () => {
         const output = await clientAdmFactory.addClient({
             name: 'Test Client',
             email: 'test@example.com',
-            address: 'Test Address'     
+            address: {
+                street: 'Test Street',
+                complement: 'Test Complement',
+                city: 'Test City',
+                state: 'Test State',
+                zipCode: '12345'
+            }
         })
         const savedClient = await ClientModel.findOne({
             where: { id: output.id }
         })
         expect(savedClient.id).toBe(output.id)
         expect(savedClient.name).toBe('Test Client')    
-        expect(savedClient.email).toBe('test@example.com')      
-        expect(savedClient.address).toBe('Test Address')
+        expect(savedClient.email).toBe('test@example.com')
     })
 
     it('should find client', async () => {
@@ -39,13 +44,21 @@ describe('Client repository test', () => {
             id: '1',
             name: 'Test Client',
             email: 'test@example.com',
-            address: 'Test Address'
+            complement: 'Test complement',
+            street: 'Test Street',
+            city: 'Test City',
+            state: 'Test State',
+            zipCode: '12345'
         })
         const result = await clientAdmFactory.findClient({ id: '1' })
         expect(result.id).toBe('1')
         expect(result.name).toBe('Test Client')
         expect(result.email).toBe('test@example.com')
-        expect(result.address).toBe('Test Address')
+        expect(result.address.street).toBe('Test Street')
+        expect(result.address.complement).toBe('Test complement')
+        expect(result.address.city).toBe('Test City')
+        expect(result.address.state).toBe('Test State')
+        expect(result.address.zipCode).toBe('12345')
     })
 
     it('should return exception if client not found', async () => {

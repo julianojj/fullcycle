@@ -16,7 +16,7 @@ describe('Client admin facade test', () => {
     })
 
     afterAll(async () => {
-        await sequelize.close() 
+        await sequelize.close()
     })
 
     it('should add client', async () => {
@@ -27,12 +27,22 @@ describe('Client admin facade test', () => {
         const output = await clientAdmFacade.addClient({
             name: 'Test Client',
             email: 'test@example.com',
-            address: 'Test Address'
+            address: {
+                complement: 'Test complement',
+                street: 'Test Street',
+                city: 'Test City',
+                state: 'Test State',
+                zipCode: '12345'
+            }
         })
         const savedClient = await clientRepository.find(output.id)
         expect(savedClient.name).toBe('Test Client')
         expect(savedClient.email).toBe('test@example.com')
-        expect(savedClient.address).toBe('Test Address')
+        expect(savedClient.address.complement).toBe('Test complement')
+        expect(savedClient.address.street).toBe('Test Street')
+        expect(savedClient.address.city).toBe('Test City')
+        expect(savedClient.address.state).toBe('Test State')
+        expect(savedClient.address.zipCode).toBe('12345')
     })
 
     it('should find client', async () => {
@@ -41,7 +51,11 @@ describe('Client admin facade test', () => {
             id: '1',
             name: 'Test Client',
             email: 'test@example.com',
-            address: 'Test Address'
+            complement: 'Test complement',
+            street: 'Test Street',
+            city: 'Test City',
+            state: 'Test State',
+            zipCode: '12345'
         })
         const addClient = new AddClientUsecase(clientRepository)
         const findClient = new FindClientUsecase(clientRepository)
@@ -51,7 +65,11 @@ describe('Client admin facade test', () => {
         })
         expect(client.name).toBe('Test Client')
         expect(client.email).toBe('test@example.com')
-        expect(client.address).toBe('Test Address') 
+        expect(client.address.complement).toBe('Test complement')
+        expect(client.address.street).toBe('Test Street')
+        expect(client.address.city).toBe('Test City')
+        expect(client.address.state).toBe('Test State')
+        expect(client.address.zipCode).toBe('12345')
     })
 
     it('should throw error when client not found', async () => {

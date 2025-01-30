@@ -9,7 +9,13 @@ describe('Find client usecase test', () => {
                 id: '1',
                 name: 'Test Client',
                 email: 'test@example.com',
-                address: 'Test Address'
+                address: {
+                    complement: 'Test complement',
+                    street: 'Test Street',
+                    city: 'Test City',
+                    state: 'Test State',
+                    zipCode: '12345'
+                }
             })
         }
         const findClient = new FindClientUsecase(clientRepository)
@@ -17,7 +23,11 @@ describe('Find client usecase test', () => {
         expect(client.id).toBe('1')
         expect(client.name).toBe('Test Client')
         expect(client.email).toBe('test@example.com')
-        expect(client.address).toBe('Test Address') 
+        expect(client.address.complement).toBe('Test complement')
+        expect(client.address.street).toBe('Test Street')
+        expect(client.address.city).toBe('Test City')
+        expect(client.address.state).toBe('Test State')
+        expect(client.address.zipCode).toBe('12345')
     })
 
     it('should throw error when client not found', async () => {
