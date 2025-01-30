@@ -12,6 +12,7 @@ export class Order extends BaseEntity implements AggregateRoot {
     private _client: string
     private _orderItems: Product[]
     private _status: string
+    private _invoiceId: string
 
     constructor(props: OrderProps) {
         super(
@@ -54,5 +55,13 @@ export class Order extends BaseEntity implements AggregateRoot {
 
     get orderItems(): Product[] {
         return this._orderItems
+    }
+
+    get invoiceId(): string {
+        return this._invoiceId
+    }
+
+    set invoiceId(invoiceId: string) {
+        this._invoiceId = invoiceId
     }
 }

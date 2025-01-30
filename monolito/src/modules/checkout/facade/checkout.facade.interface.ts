@@ -6,6 +6,7 @@ export type PlaceOrderFacadeInput = {
 
 export type PlaceOrderFacadeOutput = {
     orderId: string,
+    invoiceId: string,
     status: string,
     total: number
 }

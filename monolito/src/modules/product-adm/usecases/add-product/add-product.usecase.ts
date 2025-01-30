@@ -17,7 +17,7 @@ export class AddProductUsecase implements UseCase {
             name: input.name,
             description: input.description,
             purchasePrice: input.price,
-            stock: 0,
+            stock: input.stock || 0,
         }
         const product = new Product(props)
         await this._productGateway.add(product)

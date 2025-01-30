@@ -5,16 +5,19 @@ import { ProductAdmFacadeFactory } from '../../product-adm/factory/product-adm.f
 import { StoreCatalogFacadeFactory } from '../../store-catalog/factory/store-catalog.factory'
 import { CheckoutFacade } from '../facade/checkout.facade'
 import { CheckoutFacadeInterface } from '../facade/checkout.facade.interface'
+import { CheckoutRepository } from '../repository/checkout.repository'
 import { PlaceOrder } from '../usecases/place-order.usecase'
 
 export class CheckoutFactory {
     static create(): CheckoutFacadeInterface {
+        const checkoutRepository = new CheckoutRepository()
         const clientAdmFacade = ClientAdmFacadeFactory.create()
         const storeCatalogFacade = StoreCatalogFacadeFactory.create()
         const productAdmFacade = ProductAdmFacadeFactory.create()
         const paymentFacade = PaymentFactory.create()
         const invoiceFacade = InvoiceFacadeFactory.create()
         const placeOrder = new PlaceOrder(
+            checkoutRepository,
             clientAdmFacade,
             storeCatalogFacade,
             productAdmFacade,

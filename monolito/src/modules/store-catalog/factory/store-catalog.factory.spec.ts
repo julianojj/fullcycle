@@ -1,6 +1,6 @@
 import { afterAll, afterEach, beforeEach, describe, expect, it } from 'vitest'
+import sequelize from '../../product-adm/repository/sequelize'
 import ProductModel from '../repository/product.model'
-import sequelize from '../repository/sequelize'
 import { StoreCatalogFacadeFactory } from './store-catalog.factory'
 
 describe('Store catalog factory test', () => {

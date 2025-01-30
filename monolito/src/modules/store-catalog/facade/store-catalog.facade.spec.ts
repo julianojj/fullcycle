@@ -1,10 +1,10 @@
 import { afterAll, afterEach, beforeEach, describe, expect, it } from 'vitest'
 import ProductModel from '../repository/product.model'
 import { ProductRepository } from '../repository/product.repository'
-import sequelize from '../repository/sequelize'
 import { FindAllProductsUsecase } from '../usecases/find-all-products/find-all-products.usecase'
 import { FindProductUsecase } from '../usecases/find-product/find-product.usecase'
 import { StoreCatalogFacade } from './store-catalog.facade'
+import sequelize from '../../product-adm/repository/sequelize'
 
 describe('Store catalog facade test', () => {
 

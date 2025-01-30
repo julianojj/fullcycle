@@ -1,11 +1,15 @@
 import { describe, expect, it, vitest } from 'vitest'
-import { CheckoutFacade } from './checkout.facade'
 import { PlaceOrder } from '../usecases/place-order.usecase'
+import { CheckoutFacade } from './checkout.facade'
 
 
 describe('Place order test', () => {
 
     it('should place order', async () => {
+        const orderRepository = {
+            save: vitest.fn(),
+            find: vitest.fn()
+        }
         const clientAdmFacade = {
             addClient: vitest.fn(),
             findClient: vitest.fn().mockResolvedValue({
@@ -56,7 +60,7 @@ describe('Place order test', () => {
             id: '2',
             stock: 20
         })
-        const placeOrder = new PlaceOrder(clientAdmFacade, storeCatalogFacade, productFacade, paymentFacade, invoiceFacade)
+        const placeOrder = new PlaceOrder(orderRepository, clientAdmFacade, storeCatalogFacade, productFacade, paymentFacade, invoiceFacade)
         const checkoutFacade = new CheckoutFacade(placeOrder)
         const output = await checkoutFacade.placeOrder({
             clientId: '1',
@@ -72,11 +76,18 @@ describe('Place order test', () => {
                 }
             ]
         })
+        orderRepository.find.mockResolvedValue({
+            id: output.orderId,
+            clientId: '1',
+            status: 'pending_payment',
+            total: 300
+        })
         expect(output.orderId).toBeDefined()
         expect(clientAdmFacade.findClient).toBeCalledWith({
             id: '1'
         })
-        expect(output.total).toBe(300)
-        expect(output.status).toBe('approved_payment')
+        const savedOrder = await orderRepository.find(output.orderId)
+        expect(savedOrder.status).toBe('pending_payment')
+        expect(savedOrder.total).toBe(300)
     })
 })

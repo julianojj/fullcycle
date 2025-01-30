@@ -1,7 +1,7 @@
 import { afterAll, afterEach, beforeEach, describe, expect, it } from 'vitest'
 import ProductModel from './product.model'
 import { ProductRepository } from './product.repository'
-import sequelize from './sequelize'
+import sequelize from '../../product-adm/repository/sequelize'
 
 describe('Product repository test', () => {
     beforeEach(async () => {

@@ -8,10 +8,12 @@ import { FindProductFacadeOutput, StoreCatalogFacadeInterface } from '../../stor
 import { Client } from '../domain/client.entity'
 import { Order } from '../domain/order.entity'
 import { Product } from '../domain/product.entity'
+import { CheckoutGateway } from '../gateway/checkout.gateway'
 import { PlaceOrderInput, PlaceOrderOutput } from './place-order.usecase.dto'
 
 export class PlaceOrder implements UseCase {
 
+    private _orderRepository: CheckoutGateway
     private _clientAdmFacade: ClientAdmFacadeInterface
     private _storeCatalogFacade: StoreCatalogFacadeInterface
     private _productAdmFacade: ProductAdmFacadeInterface
@@ -19,12 +21,14 @@ export class PlaceOrder implements UseCase {
     private _invoiceFacade: InvoiceFacadeInterface
 
     constructor(
+        orderGateway: CheckoutGateway,
         clientAdmFacade: ClientAdmFacadeInterface,
         storeCatalogFacade: StoreCatalogFacadeInterface,
         productAdmFacade: ProductAdmFacadeInterface,
         paymentFacade: PaymentFacadeInterface,
         invoiceFacade: InvoiceFacadeInterface
     ) {
+        this._orderRepository = orderGateway
         this._clientAdmFacade = clientAdmFacade
         this._storeCatalogFacade = storeCatalogFacade
         this._productAdmFacade = productAdmFacade
@@ -45,7 +49,9 @@ export class PlaceOrder implements UseCase {
             createdAt: existingClient.createdAt,
             updatedAt: existingClient.updatedAt
         })
-        const order = new Order({ client })
+        const order = new Order({
+            clientId: client.id
+        })
         const catalogProducts: FindProductFacadeOutput[] = []
         for (const inputItem of input.items) {
             const existingItem = await this._productAdmFacade.checkStock({
@@ -69,11 +75,11 @@ export class PlaceOrder implements UseCase {
         })
         if (outputPayment.status === 'approved') {
             order.approve()
-            await this._invoiceFacade.generateInvoice({
+            const output = await this._invoiceFacade.generateInvoice({
                 name: existingClient.name,
                 document: input.document,
                 street: existingClient.address.street,
-                number: existingClient.address.number,
+                number: '-',
                 complement: existingClient.address.complement,
                 city: existingClient.address.city,
                 state: existingClient.address.state,
@@ -84,11 +90,14 @@ export class PlaceOrder implements UseCase {
                     price: catalogProduct.salesPrice
                 }))
             })
+            order.invoiceId = output.id
         } else {
             order.decline()
         }
+        await this._orderRepository.save(order)
         return {
             orderId: order.id,
+            invoiceId: order.invoiceId,
             status: order.status,
             total
         }

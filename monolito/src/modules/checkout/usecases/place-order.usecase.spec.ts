@@ -5,6 +5,10 @@ import { PlaceOrder } from './place-order.usecase'
 describe('Place order test', () => {
 
     it('should place order', async () => {
+        const orderRepository = {
+            save: vitest.fn(),
+            find: vitest.fn()
+        }
         const clientAdmFacade = {
             addClient: vitest.fn(),
             findClient: vitest.fn().mockResolvedValue({
@@ -55,7 +59,7 @@ describe('Place order test', () => {
             id: '2',
             stock: 20
         })
-        const placeOrder = new PlaceOrder(clientAdmFacade, storeCatalogFacade, productFacade, paymentFacade, invoiceFacade)
+        const placeOrder = new PlaceOrder(orderRepository, clientAdmFacade, storeCatalogFacade, productFacade, paymentFacade, invoiceFacade)
         const output = await placeOrder.execute({
             clientId: '1',
             document: '111.111.111-11',
@@ -79,6 +83,10 @@ describe('Place order test', () => {
     })
 
     it('should place order when declined payment', async () => {
+        const orderRepository = {
+            save: vitest.fn(),
+            find: vitest.fn()
+        }
         const clientAdmFacade = {
             addClient: vitest.fn(),
             findClient: vitest.fn().mockResolvedValue({
@@ -129,7 +137,7 @@ describe('Place order test', () => {
             id: '2',
             stock: 20
         })
-        const placeOrder = new PlaceOrder(clientAdmFacade, storeCatalogFacade, productFacade, paymentFacade, invoiceFacade)
+        const placeOrder = new PlaceOrder(orderRepository, clientAdmFacade, storeCatalogFacade, productFacade, paymentFacade, invoiceFacade)
         const output = await placeOrder.execute({
             clientId: '1',
             document: '111.111.111-11',
@@ -153,6 +161,10 @@ describe('Place order test', () => {
     })
 
     it('should throw an erro when no stock available', async () => {
+        const orderRepository = {
+            save: vitest.fn(),
+            find: vitest.fn()
+        }
         const clientAdmFacade = {
             addClient: vitest.fn(),
             findClient: vitest.fn().mockResolvedValue({
@@ -204,7 +216,7 @@ describe('Place order test', () => {
             stock: 10
 
         })
-        const placeOrder = new PlaceOrder(clientAdmFacade, storeCatalogFacade, productFacade, paymentFacade, invoiceFacade)
+        const placeOrder = new PlaceOrder(orderRepository, clientAdmFacade, storeCatalogFacade, productFacade, paymentFacade, invoiceFacade)
         await expect(placeOrder.execute({
             clientId: '1',
             document: '111.111.111-11',
@@ -222,6 +234,10 @@ describe('Place order test', () => {
     })
 
     it('should throw an erro when client not found', async () => {
+        const orderRepository = {
+            save: vitest.fn(),
+            find: vitest.fn()
+        }
         const clientAdmFacade = {
             addClient: vitest.fn(),
             findClient: vitest.fn().mockRejectedValue(new Error('client not found'))
@@ -245,7 +261,7 @@ describe('Place order test', () => {
             }),
             findInvoice: vitest.fn()
         }
-        const placeOrder = new PlaceOrder(clientAdmFacade, storeCatalogFacade, productFacade, paymentFacade, invoiceFacade)
+        const placeOrder = new PlaceOrder(orderRepository, clientAdmFacade, storeCatalogFacade, productFacade, paymentFacade, invoiceFacade)
         await expect(placeOrder.execute({
             clientId: '1',
             document: '111.111.111-11',
@@ -263,6 +279,10 @@ describe('Place order test', () => {
     })
 
     it('should throw an error when no products selected', async () => {
+        const orderRepository = {
+            save: vitest.fn(),
+            find: vitest.fn()
+        }
         const clientAdmFacade = {
             addClient: vitest.fn(),
             findClient: vitest.fn().mockResolvedValue({
@@ -293,7 +313,7 @@ describe('Place order test', () => {
             }),
             findInvoice: vitest.fn()
         }
-        const placeOrder = new PlaceOrder(clientAdmFacade, storeCatalogFacade, productFacade, paymentFacade, invoiceFacade)
+        const placeOrder = new PlaceOrder(orderRepository, clientAdmFacade, storeCatalogFacade, productFacade, paymentFacade, invoiceFacade)
         await expect(placeOrder.execute({
             clientId: '1',
             document: '111.111.111-11',

@@ -6,6 +6,7 @@ class ProductModel extends Model {
     name: string
     description: string
     purchasePrice: number
+    salesPrice: number
     stock: number
     createdAt: Date
     updatedAt: Date
@@ -13,11 +14,12 @@ class ProductModel extends Model {
 
 ProductModel.init({
     id: {
-        type: DataTypes.UUID,
+        type: DataTypes.STRING,
         primaryKey: true,
     },
     name: DataTypes.STRING,
     description: DataTypes.STRING,
+    salesPrice: DataTypes.FLOAT,
     purchasePrice: DataTypes.FLOAT,
     stock: DataTypes.INTEGER,
     createdAt: DataTypes.DATE,
@@ -27,6 +29,5 @@ ProductModel.init({
     tableName: 'products',
     timestamps: false
 })
-
 
 export default ProductModel

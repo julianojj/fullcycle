@@ -13,8 +13,7 @@ export class OrderItemModel extends Model {
 
 OrderItemModel.init({
     orderId: {
-        type: DataTypes.STRING,
-        primaryKey: true,
+        type: DataTypes.STRING
     },
     productId: DataTypes.STRING,
     name: DataTypes.STRING,
@@ -24,6 +23,6 @@ OrderItemModel.init({
     updatedAt: DataTypes.DATE,
 }, {
     timestamps: false,
-    tableName: 'order_items',
+    tableName: 'orderItems',
     sequelize,
 })

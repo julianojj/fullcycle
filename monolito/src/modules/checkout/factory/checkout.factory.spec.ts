@@ -9,7 +9,6 @@ import TransactionModel from '../../payment/repository/transaction.model'
 import ProductModel from '../../product-adm/repository/product.model'
 import productSequelize from '../../product-adm/repository/sequelize'
 import CatalogProductModel from '../../store-catalog/repository/product.model'
-import catalogSequelize from '../../store-catalog/repository/sequelize'
 import { OrderItemModel } from '../repository/order-item.model'
 import { OrderModel } from '../repository/order.model'
 import checkoutSequelize from '../repository/sequelize'
@@ -18,23 +17,22 @@ import { CheckoutFactory } from './checkout.factory'
 
 describe('Place order test', () => {
     beforeEach(async () => {
-        await checkoutSequelize.sync()
-        await clientAdmSequelize.sync()
-        await invoiceSequelize.sync()
-        await paymentSequelize.sync()
-        await catalogSequelize.sync()
-        await productSequelize.sync()
+        await checkoutSequelize.sync({ force: true })
+        await clientAdmSequelize.sync({ force: true })
+        await invoiceSequelize.sync({ force: true })
+        await paymentSequelize.sync({ force: true })
+        await productSequelize.sync({ force: true })
     })
 
     afterEach(async () => {
         await ClientModel.destroy({ where: {} })
-        await OrderItemModel.destroy({ where: {} })
-        await OrderModel.destroy({ where: {} })
         await InvoiceModel.destroy({ where: {} })
         await InvoiceItemModel.destroy({ where: {} })
         await TransactionModel.destroy({ where: {} })
         await CatalogProductModel.destroy({ where: {} })
         await ProductModel.destroy({ where: {} })
+        await OrderItemModel.destroy({ where: {} })
+        await OrderModel.destroy({ where: {} })
     })
 
     afterAll(async () => {
@@ -42,7 +40,6 @@ describe('Place order test', () => {
         await clientAdmSequelize.close()
         await invoiceSequelize.close()
         await paymentSequelize.close()
-        await catalogSequelize.close()
         await productSequelize.close()
     })
 
@@ -60,14 +57,9 @@ describe('Place order test', () => {
             }
         })
 
-        await CatalogProductModel.bulkCreate([
-            { id: '1', name: 'Test Product 1', description: 'This is a test product 1', salesPrice: 100 },
-            { id: '2', name: 'Test Product 2', description: 'This is a test product 2', salesPrice: 150 },
-        ])
-
         await ProductModel.bulkCreate([
-            { id: '1', stock: 10 },
-            { id: '2', stock: 20 }
+            { id: '1', name: 'Test Product 1', description: 'This is a test product 1', salesPrice: 100, purchasePrice: 100, stock: 10},
+            { id: '2', name: 'Test Product 2', description: 'This is a test product 2', salesPrice: 150, purchasePrice: 100, stock: 10},
         ])
 
         const checkoutFacade = CheckoutFactory.create()
