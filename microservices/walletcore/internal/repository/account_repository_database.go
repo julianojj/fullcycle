@@ -42,7 +42,7 @@ func (a *AccountRepositoryDatabase) Save(ctx context.Context, account *entity.Ac
 func (a *AccountRepositoryDatabase) Find(ctx context.Context, id string) (*entity.Account, error) {
 	var (
 		account entity.Account
-		client entity.Client
+		client  entity.Client
 	)
 	err := a.db.QueryRowContext(
 		ctx,
@@ -78,4 +78,22 @@ func (a *AccountRepositoryDatabase) Find(ctx context.Context, id string) (*entit
 	}
 	account.Client = &client
 	return &account, nil
+}
+
+func (a *AccountRepositoryDatabase) Update(ctx context.Context, account *entity.Account) error {
+	stmt, err := a.db.PrepareContext(ctx, `
+        UPDATE Accounts
+        SET balance = $1, updatedAt = $2
+        WHERE Id = $3
+    `)
+	if err != nil {
+		return err
+	}
+	_, err = stmt.ExecContext(
+		ctx,
+		account.Balance,
+		account.UpdatedAt,
+		account.ID,
+	)
+	return err
 }

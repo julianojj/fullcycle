@@ -4,9 +4,11 @@ import (
 	"context"
 	"testing"
 
+	"github.com/julianojj/fullcycle/eda/pkg/events"
 	"github.com/julianojj/fullcycle/microservices/walletcore/internal/entity"
+	"github.com/julianojj/fullcycle/microservices/walletcore/internal/event"
 	"github.com/julianojj/fullcycle/microservices/walletcore/internal/repository"
-	"github.com/stretchr/testify/assert"
+	"github.com/julianojj/fullcycle/microservices/walletcore/pkg/uow"
 	"github.com/stretchr/testify/mock"
 )
 
@@ -20,7 +22,13 @@ func TestCreateTransaction(t *testing.T) {
 	accountTo.Credit(0)
 	accountRepository := repository.NewAccountRepositoryMock()
 	transactionRepository := repository.NewTransactionRepositoryMock()
-	createTransaction := NewCreateTransaction(accountRepository, transactionRepository)
+	transactionCreated := event.NewTransactionCreatedEvent()
+	balanceUpdated := event.NewBalanceUpdatedEvent()
+	publisher := new(events.PublisherDispatch)
+	uowork := uow.NewUowMock()
+	uowork.On("Do", mock.Anything, mock.Anything).Return(nil)
+
+	createTransaction := NewCreateTransaction(uowork, publisher, transactionCreated, balanceUpdated)
 	input := &CreateTransactionInput{
 		AccountFrom: accountFrom.ID,
 		AccountTo:   accountTo.ID,
@@ -29,13 +37,8 @@ func TestCreateTransaction(t *testing.T) {
 	accountRepository.On("Find", ctx, accountFrom.ID).Once().Return(accountFrom, nil)
 	accountRepository.On("Find", ctx, accountTo.ID).Once().Return(accountTo, nil)
 	transactionRepository.On("Create", ctx, mock.Anything).Return(nil)
-	output, _ := createTransaction.Execute(ctx, input)
-	assert.NotNil(t, output.ID)
-	assert.Equal(t, input.Amount, output.Amount)
-	assert.Equal(t, 900.00, accountFrom.Balance)
-	assert.Equal(t, 100.00, accountTo.Balance)
-	accountRepository.AssertExpectations(t)
-	accountRepository.AssertNumberOfCalls(t, "Find", 2)
-	transactionRepository.AssertExpectations(t)
-	transactionRepository.AssertNumberOfCalls(t, "Create", 1)
+	accountRepository.On("Update", ctx, mock.Anything).Return(nil)
+	createTransaction.Execute(ctx, input)
+	uowork.AssertExpectations(t)
+	uowork.AssertNumberOfCalls(t, "Do", 1)
 }

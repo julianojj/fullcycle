@@ -1,0 +1,62 @@
+POST http://localhost:8080/clients
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "email": "john.doe@test.com"
+}
+
+
+###
+
+POST http://localhost:8080/clients
+Content-Type: application/json
+
+{
+    "name": "Jane Doe",
+    "email": "jane.doe@test.com"
+}
+
+###
+
+POST http://localhost:8080/accounts
+Content-Type: application/json
+
+{
+    "client_id": "86501483-5856-45f7-9d5a-ed64d19ba0a9"
+}
+
+
+###
+
+GET http://localhost:8080/accounts/063a21f1-5673-490c-8839-75f1e938bc91
+
+
+###
+
+POST http://localhost:8080/accounts/
+Content-Type: application/json
+
+{
+    "client_id": "ba57080b-9c3b-4c50-947d-ddac4968a275"
+}
+
+
+###
+
+POST http://localhost:8080/transactions
+Content-Type: application/json
+
+{
+    "account_from": "063a21f1-5673-490c-8839-75f1e938bc91",
+    "account_to": "bef48fed-8f52-472b-8d98-f14fb87599f5",
+    "amount": 90.00
+}
+
+###
+
+GET http://localhost:8080/accounts/063a21f1-5673-490c-8839-75f1e938bc91
+
+###
+
+GET http://localhost:8080/accounts/bef48fed-8f52-472b-8d98-f14fb87599f5
