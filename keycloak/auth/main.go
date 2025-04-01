@@ -46,6 +46,7 @@ func main() {
 	r.GET("/login", func(ctx *gin.Context) {
 		session := sessions.Default(ctx)
 		nonce := uuid.NewString()
+		state := uuid.NewString()
 		if session.Get("nonce") == nil {
 			session.Set("nonce", nonce)
 			if err := session.Save(); err != nil {
@@ -55,12 +56,22 @@ func main() {
 		} else {
 			nonce = session.Get("nonce").(string)
 		}
+		if session.Get("state") == nil {
+			session.Set("state", state)
+			if err := session.Save(); err != nil {
+				ctx.AbortWithError(http.StatusInternalServerError, err)
+				return
+			}
+		} else {
+			state = session.Get("state").(string)
+		}
 		query := url.Values{}
 		query.Set("client_id", "fullcycle-client")
 		query.Set("redirect_uri", "http://localhost:8081/callback")
 		query.Set("scope", "openid")
 		query.Set("response_type", "code")
 		query.Set("nonce", nonce)
+		query.Set("state", state)
 		location := fmt.Sprintf("http://localhost:8080/realms/fullcycle/protocol/openid-connect/auth?%s", query.Encode())
 		ctx.Redirect(http.StatusTemporaryRedirect, location)
 	})
@@ -68,6 +79,14 @@ func main() {
 	r.GET("/callback", func(ctx *gin.Context) {
 		session := sessions.Default(ctx)
 		nonce := session.Get("nonce").(string)
+		state := session.Get("state").(string)
+
+		if state != ctx.Query("state") {
+			ctx.AbortWithStatusJSON(http.StatusForbidden, map[string]any{
+				"err": "user not allowed",
+			})
+			return
+		}
 
 		body := map[string]string{
 			"client_id":    "fullcycle-client",
