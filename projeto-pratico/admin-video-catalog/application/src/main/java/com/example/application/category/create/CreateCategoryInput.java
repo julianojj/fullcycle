@@ -1,4 +1,7 @@
 package com.example.application.category.create;
 
-public record CreateCategoryInput() {
+public record CreateCategoryInput(
+        String name,
+        String description
+) {
 }

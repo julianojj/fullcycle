@@ -8,8 +8,8 @@ class CreateCategoryUsecaseTest {
     @Test
     public void testCreateCategory() {
         var createCategory = new CreateCategoryUsecase();
-        var input = new CreateCategoryInput();
+        var input = new CreateCategoryInput("any-name", "any-description");
         var output = createCategory.execute(input);
-        assertNotNull(output);
+        assertNotNull(output.id());
     }
 }
