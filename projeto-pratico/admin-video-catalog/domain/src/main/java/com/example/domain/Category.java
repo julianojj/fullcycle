@@ -28,6 +28,19 @@ public class Category extends AggregateRoot<CategoryID> {
         this.deletedAt = null;
     }
 
+
+    public static Category with(
+            String name,
+            String description,
+            boolean isActive
+    ) {
+        var category = new Category(name, description);
+        if (!isActive) {
+            category.Deactivate();
+        }
+        return category;
+    }
+
     @Override
     public void validate(ValidationHandler handler) {
         new CategoryValidator(this, handler).validate();

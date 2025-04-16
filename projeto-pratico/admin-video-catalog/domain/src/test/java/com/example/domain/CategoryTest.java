@@ -51,6 +51,38 @@ class CategoryTest {
     }
 
     @Test
+    public void testNewCategoryWithIsActiveTrue() {
+        var expectedName = "Terror";
+        var expectedDescription = "Filme de terror";
+        var expectedIsActive = true;
+        var category = Category.with(expectedName, expectedDescription, expectedIsActive);
+        assertDoesNotThrow(() -> category.validate(new ThrowsValidationHandler()));
+        assertNotNull(category.getId());
+        assertEquals(expectedName, category.getName());
+        assertEquals(expectedDescription, category.getDescription());
+        assertTrue(category.getActive());
+        assertNotNull(category.getCreatedAt());
+        assertNotNull(category.getUpdatedAt());
+        assertNull(category.getDeletedAt());
+    }
+
+    @Test
+    public void testNewCategoryWithIsActiveFalse() {
+        var expectedName = "Terror";
+        var expectedDescription = "Filme de terror";
+        var expectedIsActive = false;
+        var category = Category.with(expectedName, expectedDescription, expectedIsActive);
+        assertDoesNotThrow(() -> category.validate(new ThrowsValidationHandler()));
+        assertNotNull(category.getId());
+        assertEquals(expectedName, category.getName());
+        assertEquals(expectedDescription, category.getDescription());
+        assertFalse(category.getActive());
+        assertNotNull(category.getCreatedAt());
+        assertNotNull(category.getUpdatedAt());
+        assertNotNull(category.getDeletedAt());
+    }
+
+    @Test
     public void testDeactivateCategory() {
         var category = new Category("Terror", "Filme de terror");
         assertTrue(category.getActive());
