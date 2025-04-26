@@ -40,9 +40,15 @@ public class UpdateCategoryUsecaseTest {
         var input = new UpdateCategoryInput(expectedId.getValue(), expectedName, expectedDescription, expectedIsActive);
         var output = updateCategoryUsecase.execute(input).get();
         assertNotNull(output);
-        assertEquals(expectedId.getValue(), output.id());
-        assertEquals(expectedName, output.name());
-        assertEquals(expectedDescription, output.description());
-        assertNotEquals(expectedUpdatedAt, output.updatedAt());
+        assertNotNull(output.id());
+        Mockito.verify(categoryGateway, Mockito.times(1)).findById(expectedCategory.getId());
+        Mockito.verify(categoryGateway, Mockito.times(1)).update(Mockito.argThat(
+                category ->
+                        category.getName().equals(expectedName)
+                        && category.getDescription().equals(expectedDescription)
+                        && category.getActive().equals(expectedIsActive)
+                        && category.getId().equals(expectedId)
+                        && category.getUpdatedAt().isAfter(expectedUpdatedAt)
+        ));
     }
 }
