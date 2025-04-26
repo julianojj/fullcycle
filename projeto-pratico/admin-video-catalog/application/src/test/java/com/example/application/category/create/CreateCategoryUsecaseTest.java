@@ -1,7 +1,6 @@
 package com.example.application.category.create;
 
 import com.example.domain.CategoryGateway;
-import com.example.exceptions.DomainException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -31,7 +30,7 @@ class CreateCategoryUsecaseTest {
         Mockito.when(categoryGateway.create(Mockito.any()))
                 .thenAnswer(returnsFirstArg());
         var input = new CreateCategoryInput(expectedName, expectedDescription, expectedIsActive);
-        var output = createCategoryUsecase.execute(input);
+        var output = createCategoryUsecase.execute(input).get();
         assertNotNull(output.id());
         Mockito.verify(categoryGateway, Mockito.times(1)).create(Mockito.argThat(category -> {
             return Objects.equals(expectedName, category.getName())
@@ -52,7 +51,7 @@ class CreateCategoryUsecaseTest {
         Mockito.when(categoryGateway.create(Mockito.any()))
                 .thenAnswer(returnsFirstArg());
         var input = new CreateCategoryInput(expectedName, expectedDescription, expectedIsDeactivated);
-        var output = createCategoryUsecase.execute(input);
+        var output = createCategoryUsecase.execute(input).get();
         assertNotNull(output.id());
         Mockito.verify(categoryGateway, Mockito.times(1)).create(Mockito.argThat(category -> {
             return Objects.equals(expectedName, category.getName())
@@ -71,11 +70,11 @@ class CreateCategoryUsecaseTest {
         var expectedDescription = "any-description";
         var expectedException = "name is required";
         var expectedIsActive = true;
+        var expectedErrorCount = 1;
         var input = new CreateCategoryInput(expectedName, expectedDescription, expectedIsActive);
-        var exception = assertThrows(DomainException.class, () -> {
-            createCategoryUsecase.execute(input);
-        });
-        assertEquals(expectedException, exception.getErrors().getFirst().message());
+        var notification = createCategoryUsecase.execute(input).getLeft();
+        assertEquals(expectedErrorCount, notification.getErrors().size());
+        assertEquals(expectedException, notification.getErrors().getFirst().message());
         Mockito.verify(categoryGateway, Mockito.times(0)).create(Mockito.any());
     }
 
@@ -85,13 +84,13 @@ class CreateCategoryUsecaseTest {
         var expectedDescription = "any-description";
         var expectedIsActive = true;
         var expectedGatewayError = "gateway error";
+        var expectedErrorCount = 1;
         Mockito.when(categoryGateway.create(Mockito.any()))
                 .thenThrow(new IllegalStateException(expectedGatewayError));
         var input = new CreateCategoryInput(expectedName, expectedDescription, expectedIsActive);
-        var exception = assertThrows(IllegalStateException.class, () -> {
-            createCategoryUsecase.execute(input);
-        });
-        assertEquals(expectedGatewayError, exception.getMessage());
+        var notification = createCategoryUsecase.execute(input).getLeft();
+        assertEquals(expectedErrorCount, notification.getErrors().size());
+        assertEquals(expectedGatewayError, notification.getErrors().getFirst().message());
         Mockito.verify(categoryGateway, Mockito.times(1)).create(Mockito.argThat(category -> {
             return Objects.equals(expectedName, category.getName())
                     && Objects.equals(expectedDescription, category.getDescription())
