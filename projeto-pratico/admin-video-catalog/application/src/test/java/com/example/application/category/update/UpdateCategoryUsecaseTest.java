@@ -3,6 +3,7 @@ package com.example.application.category.update;
 import com.example.domain.Category;
 import com.example.domain.CategoryGateway;
 import com.example.exceptions.DomainException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -23,6 +24,11 @@ public class UpdateCategoryUsecaseTest {
 
     @Mock
     private CategoryGateway categoryGateway;
+
+    @BeforeEach
+    public void cleanUp() {
+        Mockito.reset(categoryGateway);
+    }
 
     @Test
     public void testUpdateCategory() {
