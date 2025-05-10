@@ -1,6 +1,4 @@
 rootProject.name = 'admin-video-catalog'
 include 'domain'
 include 'application'
-include 'infraestructure'
-include 'infraestructure'
-
+include 'infrastructure'
