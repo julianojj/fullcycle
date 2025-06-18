@@ -1,9 +1,9 @@
-CREATE TABLE Category (
-    Id VARCHAR(36) PRIMARY KEY,
-    Name VARCHAR(255) NOT NULL,
-    Description TEXT,
-    IsActive BOOLEAN NOT NULL,
-    CreatedAt DATETIME NOT NULL,
-    UpdatedAt DATETIME NOT NULL,
-    DeletedAt DATETIME
+CREATE TABLE categories (
+    id VARCHAR(36) PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at DATETIME(6) NOT NULL,
+    updated_at DATETIME(6) NOT NULL,
+    deleted_at DATETIME(6)
 );

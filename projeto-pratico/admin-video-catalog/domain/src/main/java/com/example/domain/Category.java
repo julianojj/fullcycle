@@ -3,7 +3,9 @@ package com.example.domain;
 import com.example.validation.ValidationHandler;
 import com.example.validation.handler.ThrowsValidationHandler;
 
+import java.security.PublicKey;
 import java.time.Instant;
+import java.util.Objects;
 
 public class Category extends AggregateRoot<CategoryID> {
     private String name;
@@ -19,7 +21,7 @@ public class Category extends AggregateRoot<CategoryID> {
             String description
     ) {
         super(CategoryID.unique());
-        this.name = name;
+        this.name = Objects.requireNonNull(name);
         this.description = description;
         this.active = true;
         var now = Instant.now();
@@ -28,6 +30,23 @@ public class Category extends AggregateRoot<CategoryID> {
         this.deletedAt = null;
     }
 
+    public Category(
+            CategoryID categoryId,
+            String name,
+            String description,
+            boolean isActive,
+            Instant createdAt,
+            Instant updatedAt,
+            Instant deletedAt
+    ) {
+        super(categoryId);
+        this.name = Objects.requireNonNull(name);
+        this.description = description;
+        this.active = isActive;
+        this.createdAt = Objects.requireNonNull(createdAt);
+        this.updatedAt = Objects.requireNonNull(updatedAt);
+        this.deletedAt = deletedAt;
+    }
 
     public static Category with(
             String name,
@@ -39,6 +58,26 @@ public class Category extends AggregateRoot<CategoryID> {
             category.Deactivate();
         }
         return category;
+    }
+
+    public static Category with(
+            CategoryID categoryId,
+            String name,
+            String description,
+            boolean isActive,
+            Instant createdAt,
+            Instant updatedAt,
+            Instant deletedAt
+    ) {
+        return new Category(
+                categoryId,
+                name,
+                description,
+                isActive,
+                createdAt,
+                updatedAt,
+                deletedAt
+        );
     }
 
     @Override
