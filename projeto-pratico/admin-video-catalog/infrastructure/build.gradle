@@ -30,6 +30,7 @@ repositories {
 dependencies {
     implementation(project(":domain"))
     implementation(project(":application"))
+    implementation("io.vavr:vavr:0.10.6")
 
     implementation('mysql:mysql-connector-java:8.0.33')
     implementation('org.springframework.boot:spring-boot-starter-web') {

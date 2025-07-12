@@ -1,7 +1,7 @@
 package com.example.infrastructure.category.persistence;
 
 import com.example.domain.Category;
-import com.example.infrastructure.MySQLGatewayTest;
+import com.example.MySQLGatewayTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

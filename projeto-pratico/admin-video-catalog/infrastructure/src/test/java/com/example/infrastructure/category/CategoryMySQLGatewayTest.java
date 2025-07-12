@@ -2,7 +2,7 @@ package com.example.infrastructure.category;
 
 import com.example.domain.Category;
 import com.example.domain.CategorySearchQuery;
-import com.example.infrastructure.MySQLGatewayTest;
+import com.example.MySQLGatewayTest;
 import com.example.infrastructure.category.persistence.CategoryRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
